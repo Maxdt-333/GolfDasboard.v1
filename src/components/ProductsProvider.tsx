@@ -29,7 +29,7 @@ function reducer(state: State, action: Action): State {
     case "FETCH_START": return { ...state, status: "loading", error: null };
     case "FETCH_SUCCESS": return { products: action.products, status: "success", error: null, notice: "", noticeId: state.noticeId, nextId: Math.max(0, ...action.products.map((product) => product.id)) + 1 };
     case "FETCH_ERROR": return { ...state, status: "error", error: action.error };
-    case "ADD": return { ...state, products: [...state.products, action.product], nextId: Math.max(state.nextId, action.product.id + 1), notice: `“${action.product.name}” was created${action.product.status === "Archived" ? " as Archived" : ""}.`, noticeId: state.noticeId + 1 };
+    case "ADD": return { ...state, products: [...state.products, action.product], nextId: Math.max(state.nextId, action.product.id + 1), notice: "Product saved.", noticeId: state.noticeId + 1 };
     case "UPDATE": {
       const previous = state.products.find((product) => product.id === action.product.id);
       if (!previous) return state;
