@@ -85,7 +85,29 @@ See [testing](docs/TESTING.md) for coverage and reports. GitHub Actions runs Typ
 
 ## Screenshots
 
-// TODO: Add desktop and mobile screenshots.
+The following screenshots were captured in a mobile browser against the local production-style preview.
+
+| Owner workspace | Product actions |
+| --- | --- |
+| <img src="docs/screenshots/mobile/owner-overview.jpeg" alt="Mobile owner workspace with inventory metrics and filters" width="320"> | <img src="docs/screenshots/mobile/product-cards.jpeg" alt="Mobile product cards with view and edit actions" width="320"> |
+| Inventory overview and responsive controls | Product photos, stock, status and aligned actions |
+
+| Combined filters | Validation feedback |
+| --- | --- |
+| <img src="docs/screenshots/mobile/combined-filters.jpeg" alt="Mobile inventory filtered by product name and status" width="320"> | <img src="docs/screenshots/mobile/form-validation.jpeg" alt="Mobile add-product form with field-specific validation" width="320"> |
+| Case-insensitive search and status filtering working together | Clear field-level errors and submission guidance |
+
+| Image preview | Customer preview |
+| --- | --- |
+| <img src="docs/screenshots/mobile/image-preview.jpeg" alt="In-page mobile product image dialog" width="320"> | <img src="docs/screenshots/mobile/customer-preview.jpeg" alt="Read-only mobile customer catalog" width="320"> |
+| In-page enlargement without leaving the application | Read-only catalog with responsive search and sorting |
+
+| Out-of-stock customer item |
+| --- |
+| <img src="docs/screenshots/mobile/customer-out-of-stock.jpeg" alt="Out-of-stock product visible in the mobile customer catalog" width="320"> |
+| Active zero-stock inventory remains visible and is clearly labelled |
+
+Desktop screenshots remain to be added before submission.
 
 ## Implementation
 
