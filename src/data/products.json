@@ -1,0 +1,164 @@
+[
+  {
+    "id": 1,
+    "name": "Tour Driver \u00b7 10.5\u00b0",
+    "category": "Clubs",
+    "price": 349.99,
+    "stock": 12,
+    "status": "Active",
+    "thumbnail": "/thumbnails/clubs.svg"
+  },
+  {
+    "id": 2,
+    "name": "Milled Blade Putter",
+    "category": "Clubs",
+    "price": 179,
+    "stock": 8,
+    "status": "Active",
+    "thumbnail": "/thumbnails/clubs.svg"
+  },
+  {
+    "id": 3,
+    "name": "Forged Iron Set \u00b7 5\u2013PW",
+    "category": "Clubs",
+    "price": 699.95,
+    "stock": 4,
+    "status": "Active",
+    "thumbnail": "/thumbnails/clubs.svg"
+  },
+  {
+    "id": 4,
+    "name": "Sand Wedge \u00b7 56\u00b0",
+    "category": "Clubs",
+    "price": 119.5,
+    "stock": 0,
+    "status": "Draft",
+    "thumbnail": "/thumbnails/clubs.svg"
+  },
+  {
+    "id": 5,
+    "name": "Tour Urethane Balls \u00b7 12 Pack",
+    "category": "Balls",
+    "price": 44.99,
+    "stock": 72,
+    "status": "Active",
+    "thumbnail": "/thumbnails/balls.svg"
+  },
+  {
+    "id": 6,
+    "name": "Distance Balls \u00b7 12 Pack",
+    "category": "Balls",
+    "price": 24.95,
+    "stock": 96,
+    "status": "Active",
+    "thumbnail": "/thumbnails/balls.svg"
+  },
+  {
+    "id": 7,
+    "name": "Matte Practice Balls \u00b7 6 Pack",
+    "category": "Balls",
+    "price": 12.5,
+    "stock": 0,
+    "status": "Archived",
+    "thumbnail": "/thumbnails/balls.svg"
+  },
+  {
+    "id": 8,
+    "name": "Performance Golf Polo",
+    "category": "Apparel",
+    "price": 59,
+    "stock": 28,
+    "status": "Active",
+    "thumbnail": "/thumbnails/apparel.svg"
+  },
+  {
+    "id": 9,
+    "name": "Stretch Golf Trousers",
+    "category": "Apparel",
+    "price": 79.99,
+    "stock": 16,
+    "status": "Active",
+    "thumbnail": "/thumbnails/apparel.svg"
+  },
+  {
+    "id": 10,
+    "name": "Rain Shell Jacket",
+    "category": "Apparel",
+    "price": 129,
+    "stock": 0,
+    "status": "Draft",
+    "thumbnail": "/thumbnails/apparel.svg"
+  },
+  {
+    "id": 11,
+    "name": "Classic Golf Cap",
+    "category": "Apparel",
+    "price": 29.95,
+    "stock": 34,
+    "status": "Active",
+    "thumbnail": "/thumbnails/apparel.svg"
+  },
+  {
+    "id": 12,
+    "name": "Rangefinder \u00b7 Slope Edition",
+    "category": "Accessories",
+    "price": 199.99,
+    "stock": 9,
+    "status": "Active",
+    "thumbnail": "/thumbnails/accessories.svg"
+  },
+  {
+    "id": 13,
+    "name": "Microfiber Golf Towel",
+    "category": "Accessories",
+    "price": 18,
+    "stock": 42,
+    "status": "Active",
+    "thumbnail": "/thumbnails/accessories.svg"
+  },
+  {
+    "id": 14,
+    "name": "Leather Scorecard Holder",
+    "category": "Accessories",
+    "price": 34.5,
+    "stock": 6,
+    "status": "Archived",
+    "thumbnail": "/thumbnails/accessories.svg"
+  },
+  {
+    "id": 15,
+    "name": "Bamboo Tees \u00b7 50 Pack",
+    "category": "Accessories",
+    "price": 8.99,
+    "stock": 120,
+    "status": "Active",
+    "thumbnail": "/thumbnails/accessories.svg"
+  },
+  {
+    "id": 16,
+    "name": "Putting Alignment Mirror",
+    "category": "Training",
+    "price": 32.95,
+    "stock": 15,
+    "status": "Active",
+    "thumbnail": "/thumbnails/training.svg"
+  },
+  {
+    "id": 17,
+    "name": "Indoor Putting Mat",
+    "category": "Training",
+    "price": 89,
+    "stock": 7,
+    "status": "Draft",
+    "thumbnail": "/thumbnails/training.svg"
+  },
+  {
+    "id": 18,
+    "name": "Tempo Swing Trainer",
+    "category": "Training",
+    "price": 49.5,
+    "stock": 0,
+    "status": "Archived",
+    "thumbnail": "/thumbnails/training.svg"
+  }
+]
