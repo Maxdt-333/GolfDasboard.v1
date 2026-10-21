@@ -19,7 +19,7 @@ npm test -- --grep "search, category"
 
 ## Coverage
 
-The synchronized search scenario checks both inputs, clearing and repeated queries while preserving status and sort. Customer preview also checks an Active product with zero stock and excludes Draft/Archived items.
+The product-search scenario verifies one search input in each view, clearing and repeated queries, and preservation of status and sort. Customer preview also checks an Active product with zero stock and excludes Draft/Archived items.
 
 Eleven scenarios run on desktop and mobile Chromium: 22 executions.
 
@@ -68,3 +68,4 @@ npm test
 ```
 
 Main contains the corrected message and should pass all 22 executions. Keep the intentional regression out of main.
+

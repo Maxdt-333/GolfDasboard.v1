@@ -6,7 +6,6 @@ import { Box, Leaf, Menu, X } from "lucide-react";
 import CategoryIcon from "./CategoryIcon";
 import { CATEGORIES, isCategory } from "@/lib/types";
 import { TopLink, useViewMode, ViewModeSwitch } from "./ViewModeProvider";
-import CatalogSearch from "./CatalogSearch";
 
 function CategoryNavigation({ onNavigate }: { onNavigate: () => void }) {
   const params = useSearchParams();
@@ -49,9 +48,10 @@ export default function DashboardShell({ children }: { children: React.ReactNode
         <div className="workspace-sidebar-footer"><ViewModeSwitch /></div>
       </aside>
       <div className="workspace-body">
-        <header className="workspace-topbar"><CatalogSearch /><span className="workspace-mode"><span aria-hidden="true" />{customer ? "Customer preview · Read only" : "Owner workspace"}</span></header>
+        <header className="workspace-topbar"><span className="workspace-mode"><span aria-hidden="true" />{customer ? "Customer preview · Read only" : "Owner workspace"}</span></header>
         {children}
       </div>
     </div>
   );
 }
+

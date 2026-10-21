@@ -343,3 +343,6 @@ body:has(dialog[open]) { overflow: hidden; }
 
 .product-actions .action-link, .product-actions .edit-link { position: relative; justify-content: center; text-align: center; padding-inline: 26px; }
 .product-actions .navigation-indicator { position: absolute; right: 7px; }
+
+
+@media (max-width: 767px) { .workspace-topbar { display: none; } .workspace-body { padding-top: 20px; } }

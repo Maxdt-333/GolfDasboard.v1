@@ -229,30 +229,38 @@ test("product navigation displays feedback while a route is pending", async ({ p
 });
 
 
-test("both search bars share one query and preserve the other filters", async ({ page }) => {
+test("one product search supports clearing and repeated queries in both views", async ({ page }) => {
   await page.goto("/products");
   await expectInventory(page);
-  const top = page.getByLabel("Search the catalog", { exact: true });
-  const bottom = page.getByLabel("Search products", { exact: true });
+  const search = page.getByRole("searchbox", { name: "Search products", exact: true });
+  await expect(page.getByRole("searchbox")).toHaveCount(1);
+  await expect(page.locator("#catalog-search")).toHaveCount(0);
   await page.getByLabel("Status", { exact: true }).selectOption("Active");
   await page.getByLabel("Sort by", { exact: true }).selectOption("price-asc");
-  await top.pressSequentially("dRiVeR");
-  await top.press("Enter");
-  await expect(bottom).toHaveValue("dRiVeR");
+  await search.pressSequentially("dRiVeR");
+  await search.press("Enter");
   await expect(page.getByRole("listitem")).toHaveCount(1);
   await expect(page.getByLabel("Status", { exact: true })).toHaveValue("Active");
   await expect(page.getByLabel("Sort by", { exact: true })).toHaveValue("price-asc");
-  await bottom.fill("");
-  await expect(top).toHaveValue("");
-  await top.fill("driver");
-  await top.press("Enter");
+  await search.fill("");
+  await expect(page.getByRole("listitem")).toHaveCount(12);
+  await expect(page.getByLabel("Status", { exact: true })).toHaveValue("Active");
+  await search.fill("driver");
   await expect(page.getByRole("listitem")).toHaveCount(1);
-  await top.fill("");
-  await expect(bottom).toHaveValue("");
-  await bottom.fill("balls");
-  await expect(top).toHaveValue("balls");
   await page.getByRole("button", { name: "Clear filters", exact: true }).first().click();
-  await expect(top).toHaveValue("");
-  await expect(bottom).toHaveValue("");
+  await expect(search).toHaveValue("");
   await expectInventory(page);
+  await page.getByRole("button", { name: "Customer preview", exact: false }).click();
+  await expectInventory(page, 12);
+  await expect(page.getByRole("searchbox")).toHaveCount(1);
+  await expect(page.locator("#catalog-search")).toHaveCount(0);
+  await search.pressSequentially("dRiVeR");
+  await expect(page.getByRole("listitem")).toHaveCount(1);
+  await search.fill("");
+  await expectInventory(page, 12);
+  await search.fill("driver");
+  await expect(page.getByRole("listitem")).toHaveCount(1);
+  await page.getByRole("button", { name: "Clear filters", exact: true }).first().click();
+  await expect(search).toHaveValue("");
+  await expectInventory(page, 12);
 });
