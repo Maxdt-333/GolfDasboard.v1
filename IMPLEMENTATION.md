@@ -36,9 +36,6 @@ The separate QA demo branch changes only the creation-message text. The targeted
 
 Desktop and mobile screenshots are included in the README to document the primary workflows and responsive layouts. The development time record is available at `docs/Fairway_Dashboard_Development_Timeline.pdf`.
 
-// TODO: Record the walkthrough video.
-
-// TODO: Complete the final submission and grant reviewer access.
 
 ## Navigation and image viewing
 
