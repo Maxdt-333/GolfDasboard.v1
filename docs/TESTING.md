@@ -19,7 +19,9 @@ npm test -- --grep "search, category"
 
 ## Coverage
 
-Ten scenarios run on desktop and mobile Chromium: 20 executions.
+The synchronized search scenario checks both inputs, clearing and repeated queries while preserving status and sort. Customer preview also checks an Active product with zero stock and excludes Draft/Archived items.
+
+Eleven scenarios run on desktop and mobile Chromium: 22 executions.
 
 | Scenario | Coverage |
 | --- | --- |
@@ -46,7 +48,7 @@ The workflow installs dependencies and Chromium on Node.js 24, checks TypeScript
 
 ## Scope
 
-These are Chromium desktop/mobile-viewport checks. They do not replace real-device, Safari, Firefox or complete accessibility testing. The normal implementation should pass all 20 executions. A controlled incorrect creation message can demonstrate that the create/edit assertion detects a regression; keep such a fault separate from main.
+These are Chromium desktop/mobile-viewport checks. They do not replace real-device, Safari, Firefox or complete accessibility testing. The normal implementation should pass all 22 executions. A controlled incorrect creation message can demonstrate that the create/edit assertion detects a regression; keep such a fault separate from main.
 
 ## Controlled regression demonstration
 
@@ -65,4 +67,4 @@ git switch main
 npm test
 ```
 
-Main contains the corrected message and should pass all 20 executions. Keep the intentional regression out of main.
+Main contains the corrected message and should pass all 22 executions. Keep the intentional regression out of main.

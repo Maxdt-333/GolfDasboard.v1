@@ -340,3 +340,6 @@ body:has(dialog[open]) { overflow: hidden; }
 .clubhouse-heading .button-primary { border-color: #b7c9b1; }
 .management-buttons button { font-size: 16px; }
 @media (max-width:767px) { .management-buttons button { font-size: 14px; } }
+
+.product-actions .action-link, .product-actions .edit-link { position: relative; justify-content: center; text-align: center; padding-inline: 26px; }
+.product-actions .navigation-indicator { position: absolute; right: 7px; }

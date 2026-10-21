@@ -1,36 +1,40 @@
 "use client";
 
-// Client boundary: controls are state; catalog results and counts are derived.
-import { useMemo, useState } from "react";
+// Client boundary: URL controls determine catalog results and counts.
+import { useMemo } from "react";
 import Image from "next/image";
 import Link from "./NavigationLink";
 import { useViewMode } from "./ViewModeProvider";
 import { useProducts } from "./ProductsProvider";
 import { filterProducts } from "@/lib/filterProducts";
-import { type Category, type ProductStatus, type ProductFilters as Filters, type SortOrder } from "@/lib/types";
+import { isCategory, isProductStatus, type Category, type ProductStatus, type ProductFilters as Filters, type SortOrder } from "@/lib/types";
 import { ArrowRight, Package, NotebookPen, Plus, CircleCheck, PackageX } from "lucide-react";
+import { useCatalogParams, replaceCatalogParams } from "./useCatalogParams";
 import ProductFilters from "./ProductFilters";
 import ProductTable from "./ProductTable";
 import LoadingState from "./states/LoadingState";
 import ErrorState from "./states/ErrorState";
 
 const defaultFilters: Filters = { search: "", category: "All", status: "All", sort: "none" };
-interface Props { initialSearch?: string; initialCategory?: Category | "All"; initialStatus?: ProductStatus | "All"; initialSort?: SortOrder }
-
-export default function ProductList({ initialSearch = "", initialCategory = "All", initialStatus = "All", initialSort = "none" }: Props) {
+export default function ProductList() {
   const { products, status, error, retry } = useProducts();
   const { customer } = useViewMode();
-  const [filters, setFilters] = useState<Filters>({ ...defaultFilters, search: initialSearch, category: initialCategory, status: initialStatus, sort: initialSort });
+  const params = useCatalogParams();
+  const filters = useMemo<Filters>(() => ({
+    search: params.get("q") ?? "",
+    category: isCategory(params.get("category")) ? params.get("category") as Category : "All",
+    status: isProductStatus(params.get("status")) ? params.get("status") as ProductStatus : "All",
+    sort: params.get("sort") === "price-asc" || params.get("sort") === "price-desc" ? params.get("sort") as SortOrder : "none",
+  }), [params]);
   // Keep shareable URL controls in sync without a server navigation per keystroke.
   function changeFilters(next: Filters) {
-    setFilters(next);
     const params = new URLSearchParams(window.location.search);
     const values = { q: next.search, category: next.category === "All" ? "" : next.category, status: next.status === "All" ? "" : next.status, sort: next.sort === "none" ? "" : next.sort };
     for (const [key, value] of Object.entries(values)) {
       if (value) params.set(key, value);
       else params.delete(key);
     }
-    window.history.replaceState(null, "", `/products${params.size ? `?${params}` : ""}`);
+    replaceCatalogParams(params);
   }
   const collection = useMemo(() => customer ? products.filter((product) => product.status === "Active") : products, [products, customer]);
   const visibleProducts = useMemo(() => filterProducts(collection, customer ? { ...filters, status: "All" } : filters), [collection, filters, customer]);

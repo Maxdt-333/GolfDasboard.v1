@@ -168,6 +168,10 @@ test("Customer preview shows Active products and prevents editing through histor
   await expect(page.getByLabel("Product name", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Customer preview", exact: false }).click();
   await expectInventory(page, 12);
+  const soldOut = page.getByRole("listitem").filter({ hasText: "Putting Alignment Mirror" });
+  await expect(soldOut).toContainText("Out of stock");
+  await expect(page.getByRole("listitem").filter({ hasText: "Sand Wedge" })).toHaveCount(0);
+  await expect(page.getByRole("listitem").filter({ hasText: "Tempo Swing Trainer" })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Add product", exact: true })).toHaveCount(0);
   await expect(page.locator("a[href$='/edit']")).toHaveCount(0);
   await page.goBack();
@@ -222,4 +226,33 @@ test("product navigation displays feedback while a route is pending", async ({ p
     else await expect(page.getByRole("heading", { name: "Tempo Swing Trainer", exact: true })).toBeVisible();
     await page.unrouteAll({ behavior: "wait" });
   }
+});
+
+
+test("both search bars share one query and preserve the other filters", async ({ page }) => {
+  await page.goto("/products");
+  await expectInventory(page);
+  const top = page.getByLabel("Search the catalog", { exact: true });
+  const bottom = page.getByLabel("Search products", { exact: true });
+  await page.getByLabel("Status", { exact: true }).selectOption("Active");
+  await page.getByLabel("Sort by", { exact: true }).selectOption("price-asc");
+  await top.pressSequentially("dRiVeR");
+  await top.press("Enter");
+  await expect(bottom).toHaveValue("dRiVeR");
+  await expect(page.getByRole("listitem")).toHaveCount(1);
+  await expect(page.getByLabel("Status", { exact: true })).toHaveValue("Active");
+  await expect(page.getByLabel("Sort by", { exact: true })).toHaveValue("price-asc");
+  await bottom.fill("");
+  await expect(top).toHaveValue("");
+  await top.fill("driver");
+  await top.press("Enter");
+  await expect(page.getByRole("listitem")).toHaveCount(1);
+  await top.fill("");
+  await expect(bottom).toHaveValue("");
+  await bottom.fill("balls");
+  await expect(top).toHaveValue("balls");
+  await page.getByRole("button", { name: "Clear filters", exact: true }).first().click();
+  await expect(top).toHaveValue("");
+  await expect(bottom).toHaveValue("");
+  await expectInventory(page);
 });
