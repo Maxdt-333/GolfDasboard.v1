@@ -17,6 +17,8 @@ npm test -- --project=desktop-chromium
 npm test -- --grep "search, category"
 ```
 
+For real-device setup, see [Test on a phone](../README.md#test-on-a-phone). Check listing, combined filters, form validation and details in Owner workspace, then switch to Customer preview and confirm management actions are hidden. Automated mobile checks use Chromium viewport emulation; real-phone testing is separate.
+
 ## Coverage
 
 The product-search scenario verifies one search input in each view, clearing and repeated queries, and preservation of status and sort. Customer preview also checks an Active product with zero stock and excludes Draft/Archived items.

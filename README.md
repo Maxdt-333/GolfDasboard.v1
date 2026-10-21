@@ -13,6 +13,29 @@ npm run dev
 
 Open http://localhost:3000/products. If that port is occupied, use `npm run dev -- --port 3200` and open http://localhost:3200/products.
 
+## Test on a phone
+
+Connect the computer and phone to the same Wi-Fi. Run commands from the project folder containing `package.json`.
+
+For a production preview, run:
+
+```sh
+npm run build
+npm run start -- --hostname 0.0.0.0 --port 3201
+```
+
+Keep the terminal open. On Windows, run `ipconfig` in another terminal and find the active Wi-Fi or Ethernet adapter's IPv4 address. Open `http://<computer-ip>:3201/products` on the phone; for example, `http://192.168.4.29:3201/products`. Use the actual IP, not `localhost` or `0.0.0.0`. If Windows prompts for firewall access, allow Node.js on Private networks.
+
+For development with live updates, stop the production server first, then run:
+
+```sh
+npm run dev -- --hostname 0.0.0.0 --port 3201
+```
+
+Development access is configured in `next.config.ts` with `allowedDevOrigins: ["192.168.4.29"]`. If the computer has a different IPv4 address, replace that entry with the actual address, without a scheme or port, then restart the development server. Production preview does not require this development-only setting.
+
+If the phone cannot connect, check the IP, port, Wi-Fi and firewall. Avoid guest Wi-Fi that isolates devices. If the catalog stays on its loading screen, open `http://<computer-ip>:3201/api/products` on the phone and check the computer terminal for errors; the API should return JSON containing a `products` array.
+
 ## Libraries
 
 | Library | Purpose |
