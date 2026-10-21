@@ -83,6 +83,10 @@ npm run test:ui
 
 See [testing](docs/TESTING.md) for coverage and reports. GitHub Actions runs TypeScript, lint and browser checks on main pushes and pull requests. Check the Actions tab for remote results.
 
+## Development time
+
+The documented implementation timeline, including the final testing overage, is available in the [development time record](docs/Fairway_Dashboard_Development_Timeline.pdf).
+
 ## Screenshots
 
 ### Desktop

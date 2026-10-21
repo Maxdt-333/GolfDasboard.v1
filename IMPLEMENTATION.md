@@ -34,13 +34,11 @@ The GitHub Actions workflow installs dependencies and Chromium on Node.js 24, ch
 
 The separate QA demo branch changes only the creation-message text. The targeted assertion should fail on desktop and mobile there; main retains correct behavior. Chromium viewport checks and scoped accessibility scans do not replace real-device, other-browser or complete accessibility testing.
 
-Mobile screenshots are included in the README for the owner overview, product actions, combined filters, validation, image preview, customer preview and out-of-stock behavior.
+Desktop and mobile screenshots are included in the README to document the primary workflows and responsive layouts. The development time record is available at `docs/Fairway_Dashboard_Development_Timeline.pdf`.
 
-// TODO: Add desktop screenshots.
+// TODO: Record the walkthrough video.
 
-// TODO: Record manual review results and actual time spent.
-
-// TODO: Confirm the GitHub Actions result and configure reviewer access.
+// TODO: Complete the final submission and grant reviewer access.
 
 ## Navigation and image viewing
 
