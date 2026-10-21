@@ -28,12 +28,23 @@ Data comes from a local JSON fixture through GET `/api/products`. Mutations and 
 
 Sidebar categories preserve search, status and sort. Metrics describe the selected category; the result count describes the filtered products. Clear filters preserves category. Newest first uses descending product ID. URL controls are restored on reload.
 
-## Checks
+## Check and test
 
 ```sh
 npm run lint
 npm run build
+npx playwright install chromium
+npm test
 ```
+
+Playwright builds the app and starts its own production server on port 3100; leave that port free. Eight scenarios run on desktop and mobile Chromium, giving 16 test executions.
+
+```sh
+npm run test:report
+npm run test:ui
+```
+
+See [testing](docs/TESTING.md) for coverage and reports. GitHub Actions runs TypeScript, lint and browser checks on main pushes and pull requests. Check the Actions tab for remote results.
 
 ## Screenshots
 

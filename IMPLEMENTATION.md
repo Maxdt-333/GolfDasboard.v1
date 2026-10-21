@@ -26,6 +26,20 @@ The 18 fixture products have distinct local photos. Product images use contained
 
 React context and a reducer keep the small catalog shared without a state-management dependency. Tailwind utilities and CSS provide responsive layouts; Lucide supplies consistent UI icons. The mock API keeps setup reproducible without external credentials. Session-only mutations meet the local-demo scope but would need persistent storage and server-side validation for production. Preview would need real authorization for restricted access.
 
+## Automated verification
+
+Eight Playwright scenarios run in isolated desktop/mobile Chromium contexts, giving 16 executions. Tests cover product fields, combined filters, validation/focus, create/edit, archive/restore/delete, loading/error recovery, image uploads and preview/history guards. Playwright builds and starts production on port 3100, uses retrying assertions and controls request completion for deterministic loading checks. Failure traces/screenshots and an HTML report aid diagnosis. Two workers run without local retries; CI allows one retry.
+
+The GitHub Actions workflow installs dependencies and Chromium on Node.js 24, checks TypeScript and lint, then runs the suite. It runs on main pushes, pull requests targeting main and manual dispatch, with read-only contents permission and seven-day report retention. Generated reports are ignored by Git.
+
+The separate QA demo branch changes only the creation-message text. The targeted assertion should fail on desktop and mobile there; main retains correct behavior. Chromium viewport checks and scoped accessibility scans do not replace real-device, other-browser or complete accessibility testing.
+
+// TODO: Add desktop and mobile screenshots.
+
+// TODO: Record manual review results and actual time spent.
+
+// TODO: Confirm the GitHub Actions result and configure reviewer access.
+
 ## AI-use disclosure
 
 I provided the existing Next.js application framework, API code, and supporting code for product types, form handling, filtering, formatting, and styling. These formed the starting point for the project.
