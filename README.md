@@ -13,6 +13,17 @@ npm run dev
 
 Open http://localhost:3000/products. If that port is occupied, use `npm run dev -- --port 3200` and open http://localhost:3200/products.
 
+## Libraries
+
+| Library | Purpose |
+| --- | --- |
+| Next.js | App Router, server routes and mock API |
+| React | Functional components, context and hooks |
+| TypeScript | Product contracts and typed forms/props |
+| Tailwind CSS | Responsive utility styling |
+| Lucide React | Interface icons |
+| Playwright | Desktop/mobile browser regression tests |
+
 ## Features
 
 - Eighteen products with ID, name, category, price, stock, status and an individual photo.
@@ -21,12 +32,15 @@ Open http://localhost:3000/products. If that port is occupied, use `npm run dev 
 - Details pages, validated add/edit forms and unknown-ID recovery.
 - Validated image uploads, archive/restore and confirmed deletion.
 - Product-specific action messages with automatic and manual dismissal.
+- Two-decimal price fields, in-page image enlargement and navigation loading feedback.
 - Active-only, read-only customer preview.
 - Loading, request-error/retry and empty-result states with labelled controls.
 
 Data comes from a local JSON fixture through GET `/api/products`. Mutations and uploaded images remain in memory during navigation and reset on refresh. No database, credentials or external image service is required. Customer preview is a display preference rather than authentication.
 
 Sidebar categories preserve search, status and sort. Metrics describe the selected category; the result count describes the filtered products. Clear filters preserves category. Newest first uses descending product ID. URL controls are restored on reload.
+
+With a fresh page load, `/products?simulate=slow` delays the initial request by two seconds, and `/products?simulate=error` demonstrates a failed request. Retry makes a normal request. Search and filters remain immediate.
 
 ## Check and test
 
@@ -37,7 +51,7 @@ npx playwright install chromium
 npm test
 ```
 
-Playwright builds the app and starts its own production server on port 3100; leave that port free. Eight scenarios run on desktop and mobile Chromium, giving 16 test executions.
+Playwright builds the app and starts its own production server on port 3100; leave that port free. Ten scenarios run on desktop and mobile Chromium, giving 20 test executions.
 
 ```sh
 npm run test:report

@@ -3,7 +3,7 @@
 // Client boundary: connect form events to catalog updates and client-side navigation.
 import { useViewMode } from "./ViewModeProvider";
 import { productImage } from "@/lib/productImages";
-import Link from "next/link";
+import Link from "./NavigationLink";
 import { useRouter } from "next/navigation";
 import { useProducts } from "./ProductsProvider";
 import ProductForm from "./ProductForm";
@@ -24,7 +24,7 @@ export default function ProductFormPage({ mode, id }: { mode: "add" | "edit"; id
   const product = id ? getProductById(id) : undefined;
   if (mode === "edit" && !product) return <ProductNotFound id={id ?? ""} />;
   const initialValues: ProductFormValues = product ? {
-    name: product.name, category: product.category, price: String(product.price), stock: String(product.stock), status: product.status,
+    name: product.name, category: product.category, price: product.price.toFixed(2), stock: String(product.stock), status: product.status,
   } : emptyValues;
 
   function handleSubmit(values: ProductFormValues, image?: string) {

@@ -19,7 +19,7 @@ npm test -- --grep "search, category"
 
 ## Coverage
 
-Eight scenarios run on desktop and mobile Chromium: 16 executions.
+Ten scenarios run on desktop and mobile Chromium: 20 executions.
 
 | Scenario | Coverage |
 | --- | --- |
@@ -31,6 +31,8 @@ Eight scenarios run on desktop and mobile Chromium: 16 executions.
 | Recovery | Controlled loading, HTTP errors, Retry and unknown IDs |
 | Images | Invalid uploads block Save; valid images appear after saving |
 | Preview | Active-only collection, hidden controls and history-based edit guard |
+| Currency and image preview | Two-decimal price values, in-page enlargement and Close/Escape behavior |
+| Navigation feedback | Loading feedback while details/edit route requests are deliberately held |
 
 ## Reliability and reports
 
@@ -44,7 +46,7 @@ The workflow installs dependencies and Chromium on Node.js 24, checks TypeScript
 
 ## Scope
 
-These are Chromium desktop/mobile-viewport checks. They do not replace real-device, Safari, Firefox or complete accessibility testing. The normal implementation should pass all 16 executions. A controlled incorrect creation message can demonstrate that the create/edit assertion detects a regression; keep such a fault separate from main.
+These are Chromium desktop/mobile-viewport checks. They do not replace real-device, Safari, Firefox or complete accessibility testing. The normal implementation should pass all 20 executions. A controlled incorrect creation message can demonstrate that the create/edit assertion detects a regression; keep such a fault separate from main.
 
 ## Controlled regression demonstration
 
@@ -63,4 +65,4 @@ git switch main
 npm test
 ```
 
-Main contains the corrected message and should pass all 16 executions. Keep the intentional regression out of main.
+Main contains the corrected message and should pass all 20 executions. Keep the intentional regression out of main.

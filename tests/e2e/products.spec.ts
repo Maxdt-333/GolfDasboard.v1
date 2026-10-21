@@ -155,6 +155,12 @@ test("invalid uploads block saving and valid product photos appear after save", 
   await page.getByRole("button", { name: "Create product", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Photo Upload Wedge", exact: true })).toBeVisible();
   await expect(page.locator(".product-art img")).toHaveAttribute("src", /^data:image\/webp/);
+  await page.getByRole("button", { name: "View product image", exact: true }).click();
+  const preview = page.getByRole("dialog", { name: "Photo Upload Wedge", exact: true });
+  await expect(preview.getByRole("img")).toHaveAttribute("src", /^data:image\/webp/);
+  await expect(page).toHaveURL(/\/products\/19$/);
+  await preview.getByRole("button", { name: "Close image preview", exact: true }).click();
+
 });
 
 test("Customer preview shows Active products and prevents editing through history", async ({ page }) => {
@@ -167,4 +173,53 @@ test("Customer preview shows Active products and prevents editing through histor
   await page.goBack();
   await expect(page.getByRole("heading", { name: "This view is read only", exact: true })).toBeVisible();
   await expect(page.getByLabel("Product name", { exact: true })).toHaveCount(0);
+});
+
+
+test("prices retain two decimal places and image previews stay on the details page", async ({ page, context }) => {
+  await page.goto("/products/18/edit");
+  const price = page.getByLabel("Price (USD)", { exact: true });
+  await expect(price).toHaveValue("49.50");
+  await price.fill("19.5");
+  await page.getByLabel("Stock", { exact: true }).focus();
+  await expect(price).toHaveValue("19.50");
+  await page.getByRole("button", { name: "Save changes", exact: true }).click();
+  await expect(page.locator(".detail-fields")).toContainText("$19.50");
+  const trigger = page.getByRole("button", { name: "View product image", exact: true });
+  await trigger.click();
+  const preview = page.getByRole("dialog", { name: "Tempo Swing Trainer", exact: true });
+  await expect(preview).toBeVisible();
+  await expect(preview.getByRole("img")).toBeVisible();
+  await expect(preview.getByRole("button", { name: "Close image preview", exact: true })).toBeFocused();
+  await expect(page).toHaveURL(/\/products\/18$/);
+  expect(context.pages()).toHaveLength(1);
+  await page.keyboard.press("Escape");
+  await expect(preview).not.toBeVisible();
+  await expect(trigger).toBeFocused();
+  await trigger.click();
+  await preview.getByRole("button", { name: "Close image preview", exact: true }).click();
+  await expect(preview).not.toBeVisible();
+});
+
+test("product navigation displays feedback while a route is pending", async ({ page }) => {
+  for (const edit of [false, true]) {
+    const destination = edit ? "/products/18/edit" : "/products/18";
+    let release!: () => void;
+    const gate = new Promise<void>((resolve) => { release = resolve; });
+    await page.route((url) => url.pathname === destination, async (route) => {
+      if (route.request().headers()["rsc"] === "1") await gate;
+      await route.continue();
+    });
+    await page.goto(edit ? "/products/18" : "/products");
+    try {
+      await page.getByRole("link", { name: edit ? "Edit product" : "View Tempo Swing Trainer", exact: true }).click();
+      await expect(page.locator('.navigation-indicator[data-pending="true"], .route-loading').first()).toBeVisible();
+    } finally {
+      release();
+    }
+    await expect(page).toHaveURL(new RegExp(destination + "$"));
+    if (edit) await expect(page.getByLabel("Product name", { exact: true })).toHaveValue("Tempo Swing Trainer");
+    else await expect(page.getByRole("heading", { name: "Tempo Swing Trainer", exact: true })).toBeVisible();
+    await page.unrouteAll({ behavior: "wait" });
+  }
 });

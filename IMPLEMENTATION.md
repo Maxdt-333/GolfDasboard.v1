@@ -28,7 +28,7 @@ React context and a reducer keep the small catalog shared without a state-manage
 
 ## Automated verification
 
-Eight Playwright scenarios run in isolated desktop/mobile Chromium contexts, giving 16 executions. Tests cover product fields, combined filters, validation/focus, create/edit, archive/restore/delete, loading/error recovery, image uploads and preview/history guards. Playwright builds and starts production on port 3100, uses retrying assertions and controls request completion for deterministic loading checks. Failure traces/screenshots and an HTML report aid diagnosis. Two workers run without local retries; CI allows one retry.
+Ten Playwright scenarios run in isolated desktop/mobile Chromium contexts, giving 20 executions. Tests cover product fields, combined filters, validation/focus, create/edit, archive/restore/delete, loading/error recovery, image uploads and preview/history guards. Playwright builds and starts production on port 3100, uses retrying assertions and controls request completion for deterministic loading checks. Failure traces/screenshots and an HTML report aid diagnosis. Two workers run without local retries; CI allows one retry.
 
 The GitHub Actions workflow installs dependencies and Chromium on Node.js 24, checks TypeScript and lint, then runs the suite. It runs on main pushes, pull requests targeting main and manual dispatch, with read-only contents permission and seven-day report retention. Generated reports are ignored by Git.
 
@@ -40,7 +40,15 @@ The separate QA demo branch changes only the creation-message text. The targeted
 
 // TODO: Confirm the GitHub Actions result and configure reviewer access.
 
+## Navigation and image viewing
+
+Product links expose actual router-pending state through useLinkStatus, and details/edit/new route segments have loading boundaries. Prefetched or cached navigation remains immediate; no artificial delay is added. Valid price fields normalize to two decimal places on blur, and edit values initialize with two decimals. Invalid entries remain unchanged for correction.
+
+Product image enlargement uses an in-page native modal dialog, including uploaded data URLs, so viewing an image does not trigger a blocked top-level navigation. Close and Escape restore focus to the trigger. The customer course panel is sticky on desktop, with a viewport-bounded height and stable image framing; the mobile panel remains in normal flow.
+
 ## AI-use disclosure
+
+I used OpenAI Codex in ChatGPT Work for coding and documentation assistance, and ChatGPT’s built-in image generation for product and course imagery.
 
 I provided the existing Next.js application framework, API code, and supporting code for product types, form handling, filtering, formatting, and styling. These formed the starting point for the project.
 
@@ -51,3 +59,7 @@ I used AI to generate product imagery, assist with automated tests and verificat
 I selected the golf catalog concept, supplied design references, defined the requirements and expected behavior, ran the application locally, manually tested workflows, and identified issues for correction. My QA experience informed the validation feedback, regression coverage, and controlled defect demonstration.
 
 AI-assisted automated verification and my own manual testing are documented separately.
+
+Affected areas included the dashboard, forms, uploads, notifications and preview components in `src/components/`; supporting data/filtering/validation helpers in `src/lib/`; imagery in `public/images/`; regression tests in `tests/e2e/products.spec.ts`; CI in `.github/workflows/playwright.yml`; and setup documentation.
+
+Automated output checks included TypeScript compilation and production build (`npm run build`), ESLint (`npm run lint`), 20 passing desktop/mobile Playwright executions, and scoped responsive/accessibility checks at 1280, 768 and 375 pixels. The controlled creation-message regression caused two targeted assertion failures; restoring the correct message returned the full suite to green.

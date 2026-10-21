@@ -3,7 +3,7 @@
 // Client boundary: controls are state; catalog results and counts are derived.
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "./NavigationLink";
 import { useViewMode } from "./ViewModeProvider";
 import { useProducts } from "./ProductsProvider";
 import { filterProducts } from "@/lib/filterProducts";

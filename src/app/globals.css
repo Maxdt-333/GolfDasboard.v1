@@ -252,3 +252,91 @@ a,button,input,select { transition: background-color .2s ease,color .2s ease,box
 
 /* Maintain readable small text against neutral record-page surfaces. */
 .record-workspace .page-heading .eyebrow, .record-workspace .page-heading .muted { color: #465746; }
+
+/* Shared forest surfaces and comfortable reading sizes. */
+:root { --forest: #163d29; }
+.workspace-shell, .workspace-shell.record-workspace { background: var(--forest); }
+.workspace-brand { color: var(--forest); }
+.workspace-topbar .workspace-mode { color: #f1f4e9; font-size: 14px; }
+.workspace-mode > span { background: #c6d8a9; }
+.workspace-nav-link { font-size: 16px; }
+.workspace-sidebar-footer .mode-toggle { font-size: 14px; min-height: 46px; }
+.workspace-topbar .header-search { height: 46px; }
+.workspace-topbar .header-search input { font-size: 15px; }
+.clubhouse-metric p { font-size: 15px; }
+.clubhouse-metric strong { font-size: 34px; }
+.product-filters label, .form-panel label { font-size: 15px; }
+.product-filters input, .product-filters select, .form-panel input, .form-panel select { font-size: 17px; min-height: 48px; }
+.results-bar, .clear-filters { color: #f0f4e9; font-size: 15px; }
+.results-bar strong { color: #fffdf4; }
+.card-body > .product-name { font-size: 20px; line-height: 1.4; }
+.product-meta { font-size: 12px; color: #52604e; }
+.product-price { font-size: 25px; }
+.stock-text, .out-of-stock { font-size: 14px; }
+.status-badge { font-size: 12px; }
+.product-actions .action-link, .product-actions .edit-link { font-size: 15px; min-height: 44px; }
+.product-table { font-size: 16px; }
+.product-table th { font-size: 14px; padding-block: 18px; }
+.product-table td { padding-block: 18px; }
+.product-table .product-name { font-size: 16px; }
+.product-table .product-actions { flex-wrap: wrap; justify-content: flex-start; }
+.product-table .product-actions .action-link, .product-table .product-actions .edit-link { font-size: 14px; padding: 10px 12px; }
+.form-panel .field-help, .form-panel .field-error { font-size: 14px; }
+.image-upload h3 { font-size: 17px; }
+.image-upload .upload-controls p, .image-upload .upload-caption, .image-upload .upload-buttons button { font-size: 14px; }
+.button-primary, .button-secondary, .button-danger, .button-danger-outline { font-size: 16px; min-height: 46px; }
+.record-workspace .detail-fields { font-size: 17px; }
+.record-workspace .detail-fields > div { padding-block: 18px; }
+.record-workspace .management-panel p { font-size: 16px; line-height: 1.6; }
+.record-workspace .page-heading .detail-heading, .form-page-title, .customer-catalog-layout .clubhouse-heading h1 { color: #fffdf4; }
+.record-workspace .page-heading .eyebrow, .record-workspace .page-heading .muted, .customer-catalog-layout .clubhouse-heading p { color: #e4edda; font-size: 16px; }
+.record-workspace .page-heading .button-primary { border-color: #b7c9b1; }
+.back-link { display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 12px 22px; background: #faf8f0; color: var(--forest); border: 1px solid #d2d9c9; border-radius: 999px; font-size: 16px; font-weight: 600; text-decoration: none; }
+.back-link:hover { background: #e9efdf; box-shadow: 0 5px 14px #00000014; }
+.navigation-indicator { display: inline-grid; width: 16px; height: 16px; margin-left: 6px; vertical-align: middle; opacity: 0; }
+.navigation-indicator[data-pending="true"] { opacity: 1; }
+.navigation-indicator[data-pending="true"] svg, .route-loading-icon { animation: route-spin .8s linear infinite; }
+.card-image-wrap .navigation-indicator { position: absolute; bottom: 15px; left: 15px; background: #fffefa; border-radius: 50%; }
+.route-loading-icon { margin: 0 auto 20px; }
+.route-loading h1 { font-size: 24px; font-weight: 650; }
+.route-loading p { font-size: 16px; margin-top: 10px; }
+@keyframes route-spin { to { transform: rotate(360deg); } }
+.image-preview-trigger { display: inline-flex; align-items: center; gap: 8px; font-size: 16px; text-align: left; }
+.image-preview-dialog { margin: auto; width: min(1100px, calc(100% - 32px)); max-height: calc(100dvh - 40px); border: 1px solid #d3dacb; border-radius: 24px; padding: 20px; background: #fffefa; color: var(--forest); box-shadow: 0 24px 80px #00000055; }
+.image-preview-dialog::backdrop { background: #0b2115c9; backdrop-filter: blur(4px); }
+.image-preview-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 16px; }
+.image-preview-header h2 { font-size: 21px; font-weight: 650; overflow-wrap: anywhere; }
+.image-preview-close { display: grid; place-items: center; width: 46px; height: 46px; flex-shrink: 0; border: 1px solid #cbd5c2; border-radius: 50%; background: #eef2e8; }
+.image-preview-close:hover { background: #dfe8d5; }
+.image-preview-dialog > img { width: 100%; height: min(75dvh, 850px); object-fit: contain; border-radius: 16px; background: #f2f4ef; }
+html { scrollbar-gutter: stable; }
+body:has(dialog[open]) { overflow: hidden; }
+@media (min-width:1200px) {
+ .customer-catalog-layout .clubhouse-story { position: sticky; top: 20px; height: min(740px, calc(100vh - 40px)); min-height: 0; align-self: start; }
+}
+@media (max-width:767px) {
+ .workspace-nav-link { font-size: 14px; }
+ .product-filters label, .form-panel label { font-size: 14px; }
+ .clubhouse-metric p { font-size: 12px; }
+ .clubhouse-metric strong { font-size: 29px; }
+ .product-meta { font-size: 11px; }
+ .stock-text, .out-of-stock { font-size: 13px; }
+ .product-actions .action-link, .product-actions .edit-link { font-size: 14px; }
+ .record-workspace .detail-fields { font-size: 16px; }
+ .image-preview-dialog { padding: 14px; border-radius: 20px; }
+ .image-preview-header h2 { font-size: 18px; }
+ .image-preview-dialog > img { height: 65dvh; }
+ .customer-catalog-layout .clubhouse-story { position: relative; top: auto; height: 300px; }
+}
+@media (prefers-reduced-motion:reduce) { .navigation-indicator[data-pending="true"] svg, .route-loading-icon { animation: none; } }
+
+.workspace-topbar .header-search input { font-size: 16px; }
+.clubhouse-heading .button-primary { font-size: 16px; }
+.product-notice { font-size: 16px; line-height: 1.5; }
+.product-table { min-width: 1000px; }
+
+.product-actions { flex-wrap: wrap; }
+.product-actions > a { flex: 1 1 110px; }
+.clubhouse-heading .button-primary { border-color: #b7c9b1; }
+.management-buttons button { font-size: 16px; }
+@media (max-width:767px) { .management-buttons button { font-size: 14px; } }
