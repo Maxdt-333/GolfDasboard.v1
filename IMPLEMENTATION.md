@@ -42,6 +42,8 @@ The separate QA demo branch changes only the creation-message text. The targeted
 
 ## AI-use disclosure
 
+I used OpenAI Codex in ChatGPT Work for coding and documentation assistance, and ChatGPT’s built-in image generation for product and course imagery.
+
 I provided the existing Next.js application framework, API code, and supporting code for product types, form handling, filtering, formatting, and styling. These formed the starting point for the project.
 
 I used AI to help extend and revise that foundation, implement additional product-management behavior, troubleshoot issues, and refine the responsive interface. I also used it to explore UI concepts based on my references and preferences, and to help write clearer technical comments around the existing and updated code.
@@ -51,3 +53,7 @@ I used AI to generate product imagery, assist with automated tests and verificat
 I selected the golf catalog concept, supplied design references, defined the requirements and expected behavior, ran the application locally, manually tested workflows, and identified issues for correction. My QA experience informed the validation feedback, regression coverage, and controlled defect demonstration.
 
 AI-assisted automated verification and my own manual testing are documented separately.
+
+Affected areas included the dashboard, forms, uploads, notifications and preview components in `src/components/`; supporting data/filtering/validation helpers in `src/lib/`; imagery in `public/images/`; regression tests in `tests/e2e/products.spec.ts`; CI in `.github/workflows/playwright.yml`; and setup documentation.
+
+Automated output checks included TypeScript compilation and production build (`npm run build`), ESLint (`npm run lint`), 16 passing desktop/mobile Playwright executions, and scoped responsive/accessibility checks at 1280, 768 and 375 pixels. The controlled creation-message regression caused two targeted assertion failures; restoring the correct message returned the full suite to green.
