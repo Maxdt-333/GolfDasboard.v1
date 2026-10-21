@@ -14,6 +14,16 @@ Search is trimmed and case-insensitive. Category and status restrictions compose
 
 The table exposes all inventory fields on desktop/tablet, and mobile cards expose the same information. Controls have explicit labels. Loading, failed requests, malformed responses and empty results have useful states. Search/filter interactions do not introduce artificial loading delays.
 
+## Details and forms
+
+Dynamic detail and edit routes await route params and read the shared provider. Both handle unknown IDs with a recovery link. Add/edit forms use controlled string values so blanks and malformed numbers remain available for correction. Validation runs on submission and blur, then updates as touched fields are corrected. Errors connect through aria-invalid and aria-describedby; failed submission focuses the first invalid field in visual order.
+
+Names are trimmed before saving. Category/status values must match the allowed options. Price accepts plain positive USD amounts with at most two decimal places; stock accepts non-negative safe integers. Conversion to numeric values happens only after validation.
+
+Saving dispatches ADD or UPDATE and opens the record details. New IDs increase from the largest fixture ID. The catalog derives updated results and counts from shared state. Cancel returns to the original details or list without mutating data. In-app navigation preserves state; refresh restores the fixture.
+
+Create/update notifications come from actual reducer actions rather than URL flags. Each action increments a notice ID to restart the eight-second dismissal timer, including repeated messages. Hover/focus pauses dismissal; manual dismissal is available. Timer cleanup prevents stale callbacks.
+
 ## AI-use disclosure
 
 I provided the existing Next.js application framework, API code, and supporting code for product types, form handling, filtering, formatting, and styling. These formed the starting point for the project.

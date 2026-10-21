@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useProducts } from "./ProductsProvider";
 import { filterProducts } from "@/lib/filterProducts";
@@ -24,6 +25,7 @@ export default function ProductList() {
   return (
     <main className="catalog-workspace">
       <h1 className="sr-only">Products</h1>
+      <div className="catalog-actions"><Link href="/products/new" className="button-primary">Add product</Link></div>
       <section className="inventory-overview grid grid-cols-2 gap-3 lg:grid-cols-4" aria-label="Inventory overview">
         <div className="metric-card"><p>{filters.category === "All" ? "Total products" : filters.category}</p><strong>{categoryProducts.length}</strong></div>
         <div className="metric-card"><p>Active products</p><strong>{categoryProducts.filter((p) => p.status === "Active").length}</strong></div>

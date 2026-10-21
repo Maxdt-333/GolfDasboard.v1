@@ -1,7 +1,7 @@
 "use client";
 
 // Client boundary: the catalog is shared interactive state across product routes.
-import { createContext, useContext, useEffect, useReducer, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useReducer, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { fetchProducts } from "@/lib/api";
 import type { Product } from "@/lib/types";
@@ -10,23 +10,30 @@ interface State {
   products: Product[];
   status: "loading" | "success" | "error";
   error: string | null;
+  notice: string;
+  noticeId: number;
+  nextId: number;
 }
 type Action =
   | { type: "FETCH_START" }
   | { type: "FETCH_SUCCESS"; products: Product[] }
   | { type: "FETCH_ERROR"; error: string }
   | { type: "ADD"; product: Product }
-  | { type: "UPDATE"; product: Product };
+  | { type: "UPDATE"; product: Product }
+  | { type: "DISMISS_NOTICE" };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "FETCH_START": return { ...state, status: "loading", error: null };
-    case "FETCH_SUCCESS": return { products: action.products, status: "success", error: null };
+    case "FETCH_SUCCESS": return { products: action.products, status: "success", error: null, notice: "", noticeId: state.noticeId, nextId: Math.max(0, ...action.products.map((product) => product.id)) + 1 };
     case "FETCH_ERROR": return { ...state, status: "error", error: action.error };
-    case "ADD": return { ...state, products: [...state.products, action.product] };
-    case "UPDATE": return {
-      ...state, products: state.products.map((p) => p.id === action.product.id ? action.product : p),
-    };
+    case "ADD": return { ...state, products: [...state.products, action.product], nextId: Math.max(state.nextId, action.product.id + 1), notice: `“${action.product.name}” was created${action.product.status === "Archived" ? " as Archived" : ""}.`, noticeId: state.noticeId + 1 };
+    case "UPDATE": {
+      const previous = state.products.find((product) => product.id === action.product.id);
+      if (!previous) return state;
+      return { ...state, products: state.products.map((p) => p.id === action.product.id ? action.product : p), notice: `“${action.product.name}” was updated.`, noticeId: state.noticeId + 1 };
+    }
+    case "DISMISS_NOTICE": return { ...state, notice: "" };
   }
 }
 
@@ -34,12 +41,13 @@ interface ProductsContextValue extends State {
   retry: () => void;
   addProduct: (product: Product) => void;
   updateProduct: (product: Product) => void;
+  dismissNotice: () => void;
   getProductById: (id: string) => Product | undefined;
 }
 const ProductsContext = createContext<ProductsContextValue | null>(null);
 
 export function ProductsProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, { products: [], status: "loading", error: null });
+  const [state, dispatch] = useReducer(reducer, { products: [], status: "loading", error: null, notice: "", noticeId: 0, nextId: 1 });
   const [reloadKey, setReloadKey] = useState(0);
   const searchParams = useSearchParams();
   // Simulate only the initial load. Retry deliberately makes a normal request.
@@ -69,11 +77,14 @@ export function ProductsProvider({ children }: { children: React.ReactNode }) {
     setReloadKey((key) => key + 1);
   }
 
+  const dismissNotice = useCallback(() => dispatch({ type: "DISMISS_NOTICE" }), []);
+
   return (
     <ProductsContext.Provider value={{
       ...state, retry,
-      addProduct: (product) => dispatch({ type: "ADD", product }),
-      updateProduct: (product) => dispatch({ type: "UPDATE", product }),
+      addProduct: (product) => { dispatch({ type: "ADD", product }); },
+      updateProduct: (product) => { dispatch({ type: "UPDATE", product }); },
+      dismissNotice,
       getProductById: (id) => state.products.find((p) => String(p.id) === id),
     }}>
       {children}

@@ -26,6 +26,14 @@ Search is case-insensitive and combines with category/status filters and both pr
 
 Loading, request-error/retry and empty-result states provide feedback. Open `/products?simulate=error` to check Retry or `/products?simulate=slow` for a delayed initial request. Filtering happens immediately without additional requests or artificial delays.
 
+## Product details and editing
+
+Product names open `/products/[id]`. Edit actions open the prefilled form, and Add product opens a blank form. Unknown IDs show a useful message and a link back to the catalog.
+
+Name, category and status are required. Price must be a positive plain USD amount with up to two decimal places; stock must be a non-negative whole number. Invalid input stays visible with specific feedback, and submission focuses the first invalid field. Zero stock is valid.
+
+Saving updates the shared inventory and opens the saved details. Cancel discards unsaved form changes. Changes persist during in-app navigation and reset on refresh. Confirmation messages identify the product and action, dismiss after eight seconds, pause during hover/focus, and support manual dismissal.
+
 ## Product API
 
 GET `/api/products` returns 18 products from a local JSON fixture. Each record includes ID, name, category, price, stock, status and a thumbnail. Categories are Clubs, Balls, Apparel, Accessories and Training.
