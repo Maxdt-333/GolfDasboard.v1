@@ -68,3 +68,34 @@ input::placeholder { color: #58645c; }
 .product-notice button { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; font-size: 24px; }
 .product-notice button:hover { background: #d5e4ce; }
 @media (max-width: 767px) { .record-workspace { padding: 20px 16px 40px; } .form-panel { padding: 24px 20px; } .detail-panel { grid-template-columns: 1fr; } .page-heading { align-items: flex-start; flex-direction: column; } .product-art { padding: 24px; } .product-notice { width: calc(100% - 32px); } }
+
+.image-upload { display: grid; grid-template-columns: 140px minmax(0,1fr); gap: 24px; align-items: center; background: #edf0f2; border: 1px dashed #b8c2b4; border-radius: 20px; padding: 20px; margin-bottom: 28px; }
+.upload-preview { width: 140px; height: 140px; display: grid; place-items: center; background: #fffefa; border-radius: 16px; overflow: hidden; color: #526254; font-size: 13px; }
+.upload-preview img { width: 100%; height: 100%; padding: 10px; object-fit: contain; }
+.upload-controls h3 { font-size: 15px; font-weight: 600; }
+.upload-controls p { font-size: 12px; margin-top: 8px; }
+.upload-buttons { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 14px; }
+.upload-buttons .button-secondary { font-size: 13px; }
+.upload-caption { color: #526254; }
+.text-link { color: #245738; text-decoration: underline; text-underline-offset: 3px; min-height: 44px; font-size: 13px; }
+button:disabled { opacity: .65; cursor: wait; }
+.management-panel { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 24px; margin-top: 24px; background: #fffefa; border: 1px solid #cbd2c7; border-radius: 24px; }
+.management-panel h2 { font-size: 23px; font-weight: 600; }
+.management-panel p { font-size: 13px; color: #526254; margin-top: 8px; }
+.management-buttons, .dialog-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+.management-buttons { flex-shrink: 0; }
+.button-danger, .button-danger-outline { min-height: 44px; padding: 10px 20px; border-radius: 999px; border: 1px solid #a82b25; color: #a82b25; font-weight: 600; }
+.button-danger { background: #a82b25; color: white; }
+.button-danger:hover { background: #87211c; }
+.button-danger-outline:hover { background: #fff0ed; }
+.confirm-dialog { margin: auto; width: min(520px, calc(100% - 32px)); max-height: calc(100dvh - 48px); padding: 28px; background: #fffefa; color: #183326; border: 1px solid #cbd2c7; border-radius: 24px; box-shadow: 0 24px 80px #14271c33; }
+.confirm-dialog::backdrop { background: #14271c88; backdrop-filter: blur(3px); }
+.confirm-dialog h2 { font-size: 25px; font-weight: 700; }
+.confirm-dialog p { margin: 16px 0 24px; color: #435448; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+.delete-symbol { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #fde6e1; color: #a82b25; font-size: 24px; font-weight: 700; margin-bottom: 16px; }
+.product-table td img, ul[aria-label="Golf products"] img { width: 48px; height: 48px; object-fit: contain; }
+@media (max-width: 900px) { .management-panel { flex-direction: column; align-items: stretch; } }
+@media (max-width: 480px) { .image-upload { grid-template-columns: 1fr; gap: 16px; padding: 16px; } .upload-preview { width: 120px; height: 120px; } .management-buttons > button { flex: 1 1 auto; } .confirm-dialog { padding: 24px 20px; } }
+
+/* Keep the visually hidden file control from inheriting full-width input sizing. */
+.image-upload input[type="file"] { width: 1px; min-width: 0; height: 1px; min-height: 0; padding: 0; border: 0; }

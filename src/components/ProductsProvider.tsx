@@ -20,6 +20,7 @@ type Action =
   | { type: "FETCH_ERROR"; error: string }
   | { type: "ADD"; product: Product }
   | { type: "UPDATE"; product: Product }
+  | { type: "DELETE"; id: number }
   | { type: "DISMISS_NOTICE" };
 
 function reducer(state: State, action: Action): State {
@@ -31,7 +32,15 @@ function reducer(state: State, action: Action): State {
     case "UPDATE": {
       const previous = state.products.find((product) => product.id === action.product.id);
       if (!previous) return state;
-      return { ...state, products: state.products.map((p) => p.id === action.product.id ? action.product : p), notice: `“${action.product.name}” was updated.`, noticeId: state.noticeId + 1 };
+      const archived = previous.status !== "Archived" && action.product.status === "Archived";
+      const restored = previous.status === "Archived" && action.product.status !== "Archived";
+      const message = archived ? "was archived" : restored ? `was restored as ${action.product.status}` : "was updated";
+      return { ...state, products: state.products.map((p) => p.id === action.product.id ? action.product : p), notice: `“${action.product.name}” ${message}.`, noticeId: state.noticeId + 1 };
+    }
+    case "DELETE": {
+      const product = state.products.find((product) => product.id === action.id);
+      if (!product) return state;
+      return { ...state, products: state.products.filter((product) => product.id !== action.id), notice: `“${product.name}” was deleted.`, noticeId: state.noticeId + 1 };
     }
     case "DISMISS_NOTICE": return { ...state, notice: "" };
   }
@@ -41,6 +50,7 @@ interface ProductsContextValue extends State {
   retry: () => void;
   addProduct: (product: Product) => void;
   updateProduct: (product: Product) => void;
+  deleteProduct: (id: number) => void;
   dismissNotice: () => void;
   getProductById: (id: string) => Product | undefined;
 }
@@ -84,6 +94,7 @@ export function ProductsProvider({ children }: { children: React.ReactNode }) {
       ...state, retry,
       addProduct: (product) => { dispatch({ type: "ADD", product }); },
       updateProduct: (product) => { dispatch({ type: "UPDATE", product }); },
+      deleteProduct: (id) => { dispatch({ type: "DELETE", id }); },
       dismissNotice,
       getProductById: (id) => state.products.find((p) => String(p.id) === id),
     }}>

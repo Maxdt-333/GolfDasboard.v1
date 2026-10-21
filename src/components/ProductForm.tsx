@@ -1,6 +1,7 @@
 "use client";
 
 // Client boundary: controlled inputs preserve typed values when validation fails.
+import ProductImageUpload from "./ProductImageUpload";
 import { useState, type FormEvent } from "react";
 import { CATEGORIES, STATUSES, type ProductFormValues, type FormErrors, type Category, type ProductStatus } from "@/lib/types";
 import { validateProduct } from "@/lib/validateProduct";
@@ -8,7 +9,9 @@ import { validateProduct } from "@/lib/validateProduct";
 interface Props {
   initialValues: ProductFormValues;
   submitLabel: string;
-  onSubmit: (values: ProductFormValues) => void;
+  initialImage?: string;
+  fallbackImage?: string;
+  onSubmit: (values: ProductFormValues, image?: string) => void;
   onCancel: () => void;
 }
 
@@ -16,9 +19,12 @@ function FieldError({ field, errors }: { field: keyof ProductFormValues; errors:
   return errors[field] ? <p id={`${field}-error`} className="field-error">{errors[field]}</p> : null;
 }
 
-export default function ProductForm({ initialValues, submitLabel, onSubmit, onCancel }: Props) {
+export default function ProductForm({ initialValues, initialImage, fallbackImage, submitLabel, onSubmit, onCancel }: Props) {
+  const [image, setImage] = useState(initialImage);
+  const [imageError, setImageError] = useState("");
   const [touched, setTouched] = useState<Partial<Record<keyof ProductFormValues, boolean>>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<FormErrors>({});
 
@@ -41,6 +47,7 @@ export default function ProductForm({ initialValues, submitLabel, onSubmit, onCa
   }
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (uploading) return;
     setSubmitted(true);
     const nextErrors = validateProduct(values);
     setErrors(nextErrors);
@@ -51,11 +58,16 @@ export default function ProductForm({ initialValues, submitLabel, onSubmit, onCa
       if (field instanceof HTMLInputElement || field instanceof HTMLSelectElement) field.focus();
       return;
     }
-    onSubmit(values);
+    if (imageError) {
+      document.getElementById("upload-image-button")?.focus();
+      return;
+    }
+    onSubmit(values, image);
   }
 
   return (
     <form noValidate onSubmit={handleSubmit} className="form-panel">
+      <ProductImageUpload image={image} fallback={values.category === initialValues.category && fallbackImage ? fallbackImage : values.category ? `/thumbnails/${values.category.toLowerCase()}.svg` : undefined} onChange={setImage} onBusy={setUploading} onErrorChange={setImageError} />
       <div className="space-y-6">
         <div>
           <label htmlFor="name">Product name</label>
@@ -90,8 +102,8 @@ export default function ProductForm({ initialValues, submitLabel, onSubmit, onCa
         </div>
       </div>
       <div className="mt-8 pt-6 border-t border-[#e5e9e1]">
-        {(Object.keys(errors).length > 0) && <p role="alert" className="field-error mb-4">Please correct the highlighted fields before saving.</p>}
-        <div className="flex flex-wrap gap-3"><button type="submit" className="button-primary">{submitLabel}</button><button type="button" className="button-secondary" onClick={onCancel}>Cancel</button></div>
+        {(Object.keys(errors).length > 0 || imageError) && <p role="alert" className="field-error mb-4">Please correct the highlighted fields before saving.</p>}
+        <div className="flex flex-wrap gap-3"><button type="submit" disabled={uploading} className="button-primary">{uploading ? "Preparing image…" : submitLabel}</button><button type="button" className="button-secondary" onClick={onCancel}>Cancel</button></div>
       </div>
     </form>
   );

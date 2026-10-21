@@ -18,7 +18,7 @@ export default function ProductTable({ products }: { products: Product[] }) {
           </tr></thead>
           <tbody>{products.map((product) => (
             <tr key={product.id}>
-              <td><Image src={product.thumbnail} width={48} height={48} alt={`${product.name} thumbnail`} /></td>
+              <td><Image src={product.image || product.thumbnail} unoptimized width={48} height={48} alt={`${product.name} thumbnail`} /></td>
               <td className="tabular-nums muted">#{String(product.id).padStart(3, "0")}</td>
               <td><Link href={`/products/${product.id}`} className="product-name">{product.name}</Link></td>
               <td className="muted">{product.category}</td>
@@ -33,7 +33,7 @@ export default function ProductTable({ products }: { products: Product[] }) {
       <ul className="divide-y divide-[#e5e9e1] md:hidden" aria-label="Golf products">
         {products.map((product) => <li key={product.id} className="p-5">
           <div className="flex items-start gap-3">
-            <Image src={product.thumbnail} width={48} height={48} alt={`${product.name} thumbnail`} />
+            <Image src={product.image || product.thumbnail} unoptimized width={48} height={48} alt={`${product.name} thumbnail`} />
             <div className="min-w-0 flex-1">
               <span className="text-xs muted">#{String(product.id).padStart(3, "0")} · {product.category}</span>
               <Link href={`/products/${product.id}`} className="product-name block mt-1">{product.name}</Link>

@@ -34,6 +34,14 @@ Name, category and status are required. Price must be a positive plain USD amoun
 
 Saving updates the shared inventory and opens the saved details. Cancel discards unsaved form changes. Changes persist during in-app navigation and reset on refresh. Confirmation messages identify the product and action, dismiss after eight seconds, pause during hover/focus, and support manual dismissal.
 
+## Images and inventory actions
+
+Forms accept optional JPG, PNG and WebP images up to 5 MB. Invalid types, oversized files and corrupt images produce specific errors and block saving. Save is disabled while processing. Failed replacement can retain the current photo; removal restores category artwork. Cancel discards unsaved image changes.
+
+Archive retains the record; Restore to draft changes its status to Draft. Delete requires a confirmation naming the product, with Cancel initially focused. Cancel/Escape leave the record untouched. Confirmed deletion updates the inventory and returns to the catalog. IDs are not reused during the session. Action messages distinguish create, update, archive, restore and delete.
+
+Uploaded images and all product mutations remain in memory during navigation and reset on refresh.
+
 ## Product API
 
 GET `/api/products` returns 18 products from a local JSON fixture. Each record includes ID, name, category, price, stock, status and a thumbnail. Categories are Clubs, Balls, Apparel, Accessories and Training.

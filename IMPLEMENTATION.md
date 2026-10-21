@@ -24,6 +24,14 @@ Saving dispatches ADD or UPDATE and opens the record details. New IDs increase f
 
 Create/update notifications come from actual reducer actions rather than URL flags. Each action increments a notice ID to restart the eight-second dismissal timer, including repeated messages. Hover/focus pauses dismissal; manual dismissal is available. Timer cleanup prevents stale callbacks.
 
+## Images and management actions
+
+ProductImageUpload checks MIME type, a 5 MB size limit and successful browser decoding. A request counter ignores stale upload completions. Image data stays in the controlled form until Save, then Product.image takes precedence over category artwork. Save is blocked during processing and unresolved upload errors. Cancel discards unsaved image changes; removal restores fallback artwork.
+
+Archive and restore update status without replacing other fields or photos. Restore returns to Draft. The reducer derives product-specific action messages from actual mutations. A native modal dialog contains focus and makes the background inert; Cancel is initially focused. Cancel/Escape leave data unchanged. Only confirmation dispatches DELETE and replaces the route with the catalog. nextId remains increasing after deletion.
+
+The hidden file input retains one-pixel sizing so global input styling cannot introduce page overflow. The labelled upload button provides its visible interaction target.
+
 ## AI-use disclosure
 
 I provided the existing Next.js application framework, API code, and supporting code for product types, form handling, filtering, formatting, and styling. These formed the starting point for the project.

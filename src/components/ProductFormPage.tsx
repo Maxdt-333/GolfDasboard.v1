@@ -22,13 +22,13 @@ export default function ProductFormPage({ mode, id }: { mode: "add" | "edit"; id
     name: product.name, category: product.category, price: String(product.price), stock: String(product.stock), status: product.status,
   } : emptyValues;
 
-  function handleSubmit(values: ProductFormValues) {
+  function handleSubmit(values: ProductFormValues, image?: string) {
     if (values.category === "" || values.status === "") return;
     const savedProduct: Product = {
       id: product?.id ?? nextId,
       name: values.name.trim(), category: values.category, price: Number(values.price),
       stock: Number(values.stock.trim()), status: values.status,
-      thumbnail: `/thumbnails/${values.category.toLowerCase()}.svg`,
+      thumbnail: `/thumbnails/${values.category.toLowerCase()}.svg`, image,
     };
     if (mode === "add") addProduct(savedProduct);
     else updateProduct(savedProduct);
@@ -38,6 +38,6 @@ export default function ProductFormPage({ mode, id }: { mode: "add" | "edit"; id
   return <main className="record-workspace">
     <Link href="/products" className="back-link">← Back to products</Link>
     <h1 className={mode === "edit" ? "sr-only" : "form-page-title"}>{mode === "add" ? "Add product" : "Edit product"}</h1>
-    <ProductForm key={`${mode}-${id ?? "new"}`} initialValues={initialValues} submitLabel={mode === "add" ? "Create product" : "Save changes"} onSubmit={handleSubmit} onCancel={() => router.push(product ? `/products/${product.id}` : "/products")} />
+    <ProductForm key={`${mode}-${id ?? "new"}`} initialValues={initialValues} initialImage={product?.image} fallbackImage={product?.thumbnail} submitLabel={mode === "add" ? "Create product" : "Save changes"} onSubmit={handleSubmit} onCancel={() => router.push(product ? `/products/${product.id}` : "/products")} />
   </main>;
 }
