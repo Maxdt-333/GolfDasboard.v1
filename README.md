@@ -38,7 +38,7 @@ Open http://localhost:3000/products. If that port is occupied, use `npm run dev 
 
 Data comes from a local JSON fixture through GET `/api/products`. Mutations and uploaded images remain in memory during navigation and reset on refresh. No database, credentials or external image service is required. Customer preview is a display preference rather than authentication.
 
-Sidebar categories preserve search, status and sort. Metrics describe the selected category; the result count describes the filtered products. Clear filters preserves category. Newest first uses descending product ID. URL controls are restored on reload.
+Both search bars search product names and stay synchronized when typing or clearing. Sidebar categories preserve search, status and sort. Metrics describe the selected category; the result count describes the filtered products. Clear filters preserves category. Newest first uses descending product ID. URL controls are restored on reload.
 
 With a fresh page load, `/products?simulate=slow` delays the initial request by two seconds, and `/products?simulate=error` demonstrates a failed request. Retry makes a normal request. Search and filters remain immediate.
 
@@ -51,7 +51,7 @@ npx playwright install chromium
 npm test
 ```
 
-Playwright builds the app and starts its own production server on port 3100; leave that port free. Ten scenarios run on desktop and mobile Chromium, giving 20 test executions.
+Playwright builds the app and starts its own production server on port 3100; leave that port free. Eleven scenarios run on desktop and mobile Chromium, giving 22 test executions.
 
 ```sh
 npm run test:report

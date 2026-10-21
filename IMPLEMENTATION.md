@@ -8,7 +8,7 @@ ProductsProvider loads the 18-product fixture through the API client, validates 
 
 ## Filtering and navigation
 
-ProductList stores one controlled filter object and derives the displayed products. Search is trimmed and case-insensitive; category and status restrictions compose with ascending/descending price sorts. The default sorts by descending product ID. Category metrics describe the whole selected category, independently of search/status results. URL controls are preserved through category navigation and restored on reload. Clear filters retains the category.
+ProductList derives its filters from URL parameters and computes the displayed products. Both catalog search inputs share that query through a synchronous external-store subscription, so typing, clearing and repeated searches stay synchronized without a server navigation per keystroke. Search is trimmed and case-insensitive; category and status restrictions compose with ascending/descending price sorts. The default sorts by descending product ID. Category metrics describe the whole selected category, independently of search/status results. URL controls are preserved through category navigation and restored on reload. Clear filters retains the category.
 
 ## Forms and product actions
 
@@ -20,7 +20,7 @@ Saving updates the shared inventory and opens details. Cancel discards unsaved c
 
 JPG, PNG and WebP uploads up to 5 MB are checked for type, size and successful decoding. Saving is blocked while processing or while an upload error remains unresolved. A request counter ignores stale completions. Saved uploads override the local product photo; replacement/removal can be cancelled without changing the saved image.
 
-The 18 fixture products have distinct local photos. Product images use contained sizing with padding. The course panel appears only in customer preview and retains a stable crop during scrolling. Preview shows Active products only, hides management controls, guards editing through history and blocks provider mutations. It is a display preference, not authentication.
+The 18 fixture products have distinct local photos. Product images use contained sizing with padding. The course panel appears only in customer preview and retains a stable crop during scrolling. Preview shows Active products, including zero-stock items labelled Out of stock, hides management controls, guards editing through history and blocks provider mutations. It is a display preference, not authentication.
 
 ## Dependencies and tradeoffs
 
@@ -28,7 +28,7 @@ React context and a reducer keep the small catalog shared without a state-manage
 
 ## Automated verification
 
-Ten Playwright scenarios run in isolated desktop/mobile Chromium contexts, giving 20 executions. Tests cover product fields, combined filters, validation/focus, create/edit, archive/restore/delete, loading/error recovery, image uploads and preview/history guards. Playwright builds and starts production on port 3100, uses retrying assertions and controls request completion for deterministic loading checks. Failure traces/screenshots and an HTML report aid diagnosis. Two workers run without local retries; CI allows one retry.
+Eleven Playwright scenarios run in isolated desktop/mobile Chromium contexts, giving 22 executions. Tests cover product fields, combined filters, validation/focus, create/edit, archive/restore/delete, loading/error recovery, image uploads and preview/history guards. Playwright builds and starts production on port 3100, uses retrying assertions and controls request completion for deterministic loading checks. Failure traces/screenshots and an HTML report aid diagnosis. Two workers run without local retries; CI allows one retry.
 
 The GitHub Actions workflow installs dependencies and Chromium on Node.js 24, checks TypeScript and lint, then runs the suite. It runs on main pushes, pull requests targeting main and manual dispatch, with read-only contents permission and seven-day report retention. Generated reports are ignored by Git.
 
@@ -62,4 +62,4 @@ AI-assisted automated verification and my own manual testing are documented sepa
 
 Affected areas included the dashboard, forms, uploads, notifications and preview components in `src/components/`; supporting data/filtering/validation helpers in `src/lib/`; imagery in `public/images/`; regression tests in `tests/e2e/products.spec.ts`; CI in `.github/workflows/playwright.yml`; and setup documentation.
 
-Automated output checks included TypeScript compilation and production build (`npm run build`), ESLint (`npm run lint`), 20 passing desktop/mobile Playwright executions, and scoped responsive/accessibility checks at 1280, 768 and 375 pixels. The controlled creation-message regression caused two targeted assertion failures; restoring the correct message returned the full suite to green.
+Automated output checks included TypeScript compilation and production build (`npm run build`), ESLint (`npm run lint`), 22 passing desktop/mobile Playwright executions, and scoped responsive/accessibility checks at 1280, 768 and 375 pixels. The controlled creation-message regression caused two targeted assertion failures; restoring the correct message returned the full suite to green.

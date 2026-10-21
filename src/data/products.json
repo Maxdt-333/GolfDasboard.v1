@@ -139,7 +139,7 @@
     "name": "Putting Alignment Mirror",
     "category": "Training",
     "price": 32.95,
-    "stock": 15,
+    "stock": 0,
     "status": "Active",
     "thumbnail": "/thumbnails/training.svg"
   },
