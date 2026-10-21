@@ -38,7 +38,7 @@ Open http://localhost:3000/products. If that port is occupied, use `npm run dev 
 
 Data comes from a local JSON fixture through GET `/api/products`. Mutations and uploaded images remain in memory during navigation and reset on refresh. No database, credentials or external image service is required. Customer preview is a display preference rather than authentication.
 
-Both search bars search product names and stay synchronized when typing or clearing. Sidebar categories preserve search, status and sort. Metrics describe the selected category; the result count describes the filtered products. Clear filters preserves category. Newest first uses descending product ID. URL controls are restored on reload.
+One product-name search sits alongside the filters in both Owner workspace and Customer preview. Sidebar categories preserve search, status and sort. Metrics describe the selected category; the result count describes the filtered products. Clear filters preserves category. Newest first uses descending product ID. URL controls are restored on reload.
 
 With a fresh page load, `/products?simulate=slow` delays the initial request by two seconds, and `/products?simulate=error` demonstrates a failed request. Retry makes a normal request. Search and filters remain immediate.
 
@@ -67,3 +67,4 @@ See [testing](docs/TESTING.md) for coverage and reports. GitHub Actions runs Typ
 ## Implementation
 
 See [IMPLEMENTATION.md](IMPLEMENTATION.md) for architecture, validation, dependencies, tradeoffs, verification and contributions.
+

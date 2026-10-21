@@ -8,7 +8,7 @@ ProductsProvider loads the 18-product fixture through the API client, validates 
 
 ## Filtering and navigation
 
-ProductList derives its filters from URL parameters and computes the displayed products. Both catalog search inputs share that query through a synchronous external-store subscription, so typing, clearing and repeated searches stay synchronized without a server navigation per keystroke. Search is trimmed and case-insensitive; category and status restrictions compose with ascending/descending price sorts. The default sorts by descending product ID. Category metrics describe the whole selected category, independently of search/status results. URL controls are preserved through category navigation and restored on reload. Clear filters retains the category.
+ProductList derives its filters from URL parameters and computes the displayed products. Both views use one product search beside the filters. A synchronous external-store subscription keeps typing responsive without a server navigation per keystroke; clearing the search preserves status and sorting, while Clear filters resets them and retains the category. Search is trimmed and case-insensitive; category and status restrictions compose with ascending/descending price sorts. The default sorts by descending product ID. Category metrics describe the whole selected category, independently of search/status results. URL controls are preserved through category navigation and restored on reload. Clear filters retains the category.
 
 ## Forms and product actions
 
@@ -63,3 +63,4 @@ AI-assisted automated verification and my own manual testing are documented sepa
 Affected areas included the dashboard, forms, uploads, notifications and preview components in `src/components/`; supporting data/filtering/validation helpers in `src/lib/`; imagery in `public/images/`; regression tests in `tests/e2e/products.spec.ts`; CI in `.github/workflows/playwright.yml`; and setup documentation.
 
 Automated output checks included TypeScript compilation and production build (`npm run build`), ESLint (`npm run lint`), 22 passing desktop/mobile Playwright executions, and scoped responsive/accessibility checks at 1280, 768 and 375 pixels. The controlled creation-message regression caused two targeted assertion failures; restoring the correct message returned the full suite to green.
+
