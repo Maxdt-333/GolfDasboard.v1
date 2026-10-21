@@ -11,12 +11,20 @@ npm ci
 npm run dev
 ```
 
-Open http://localhost:3000.
+Open http://localhost:3000/products.
 
 ```sh
 npm run lint
 npm run build
 ```
+
+## Catalog
+
+The catalog displays all 18 products with ID, name, category, price, stock, status and a thumbnail. Desktop/tablet use a table; mobile uses cards with the same fields.
+
+Search is case-insensitive and combines with category/status filters and both price sorts. Newest first sorts by descending product ID. Category metrics describe the whole selected category, while the result count describes the filtered results. Clear filters resets all controls.
+
+Loading, request-error/retry and empty-result states provide feedback. Open `/products?simulate=error` to check Retry or `/products?simulate=slow` for a delayed initial request. Filtering happens immediately without additional requests or artificial delays.
 
 ## Product API
 

@@ -2,9 +2,17 @@
 
 ## Architecture
 
-Next.js App Router serves the root page and GET `/api/products`. Product contracts define the five categories, three statuses and required inventory fields. A local 18-product JSON fixture keeps the API reproducible without external services or credentials.
+Next.js App Router serves `/products` and GET `/api/products`; the root route redirects to the catalog. Product contracts define the five categories, three statuses and required inventory fields. A local 18-product JSON fixture keeps the API reproducible without external services or credentials.
 
 The API client checks HTTP status, JSON shape, individual records and unique IDs before returning typed products. The route handler includes bounded delay and error simulation for recovery checks. TypeScript aliases resolve `@/` to `src/`, and Turbopack uses the application folder as its root.
+
+## Catalog state and filtering
+
+The persistent products layout wraps a client provider in Suspense. The provider loads and validates product data, aborts stale requests and supports Retry. A reducer owns the shared catalog; ProductList keeps one controlled filters object and derives visible results with useMemo.
+
+Search is trimmed and case-insensitive. Category and status restrictions compose with price sorting. Default order uses descending product ID. Category metrics are independent of search/status results; a separate live result count announces the displayed inventory. Clear filters resets the controls.
+
+The table exposes all inventory fields on desktop/tablet, and mobile cards expose the same information. Controls have explicit labels. Loading, failed requests, malformed responses and empty results have useful states. Search/filter interactions do not introduce artificial loading delays.
 
 ## AI-use disclosure
 
