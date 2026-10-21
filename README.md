@@ -85,6 +85,25 @@ See [testing](docs/TESTING.md) for coverage and reports. GitHub Actions runs Typ
 
 ## Screenshots
 
+### Desktop
+
+| Owner workspace | Combined filters |
+| --- | --- |
+| <img src="docs/screenshots/desktop/owner-overview.png" alt="Desktop owner workspace with inventory metrics, category navigation and product cards" width="560"> | <img src="docs/screenshots/desktop/combined-filters.png" alt="Desktop inventory with search, category, status and price sorting applied together" width="560"> |
+| Inventory metrics, category navigation and product controls | Search, category, status and price sorting working together |
+
+| Table view | Add product |
+| --- | --- |
+| <img src="docs/screenshots/desktop/table-view.png" alt="Desktop compact product table with filters and aligned actions" width="560"> | <img src="docs/screenshots/desktop/add-product.png" alt="Desktop add-product form with labelled product fields and image upload" width="560"> |
+| Compact inventory view with clear status and actions | Labelled inputs, image upload and clear form actions |
+
+| Product details and actions | Customer preview |
+| --- | --- |
+| <img src="docs/screenshots/desktop/product-details.png" alt="Desktop product details page with edit, archive and delete actions" width="560"> | <img src="docs/screenshots/desktop/customer-preview.png" alt="Desktop read-only customer catalog with product cards" width="560"> |
+| Complete product record with edit, archive and delete controls | Read-only customer catalog with its own responsive controls |
+
+### Mobile
+
 The following screenshots were captured in a mobile browser against the local production-style preview.
 
 | Owner workspace | Product actions |
@@ -106,8 +125,6 @@ The following screenshots were captured in a mobile browser against the local pr
 | --- |
 | <img src="docs/screenshots/mobile/customer-out-of-stock.jpeg" alt="Out-of-stock product visible in the mobile customer catalog" width="320"> |
 | Active zero-stock inventory remains visible and is clearly labelled |
-
-Desktop screenshots remain to be added before submission.
 
 ## Implementation
 
