@@ -3,7 +3,8 @@
 // Client boundary: details read the live catalog from context, including unsaved-to-server edits.
 import { useViewMode } from "./ViewModeProvider";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "./NavigationLink";
+import ProductImagePreview from "./ProductImagePreview";
 import ProductManagementActions from "./ProductManagementActions";
 import { useProducts } from "./ProductsProvider";
 import { formatPrice } from "@/lib/format";
@@ -38,7 +39,7 @@ export default function ProductDetails({ id }: { id: string }) {
             <div><dt>Price</dt><dd className="font-semibold">{formatPrice(product.price)}</dd></div>
             <div><dt>Stock</dt><dd>{customer ? (product.stock > 0 ? "In stock" : "Out of stock") : `${product.stock} units${product.stock === 0 ? " · Out of stock" : ""}`}</dd></div>
             {!customer && <><div><dt>Status</dt><dd><StatusBadge status={product.status} /></dd></div>
-            <div><dt>Thumbnail</dt><dd><a href={productImage(product)} target="_blank" rel="noreferrer" className="text-link">View product image</a></dd></div></>}
+            <div><dt>Thumbnail</dt><dd><ProductImagePreview src={productImage(product)} name={product.name} /></dd></div></>}
           </dl>
         </div>
       </section>

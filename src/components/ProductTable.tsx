@@ -4,7 +4,7 @@ import { useViewMode } from "./ViewModeProvider";
 import { useState } from "react";
 import { Eye } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "./NavigationLink";
 import type { Product } from "@/lib/types";
 import { formatPrice, formatStock } from "@/lib/format";
 import { productImage } from "@/lib/productImages";

@@ -32,6 +32,7 @@ Open http://localhost:3000/products. If that port is occupied, use `npm run dev 
 - Details pages, validated add/edit forms and unknown-ID recovery.
 - Validated image uploads, archive/restore and confirmed deletion.
 - Product-specific action messages with automatic and manual dismissal.
+- Two-decimal price fields, in-page image enlargement and navigation loading feedback.
 - Active-only, read-only customer preview.
 - Loading, request-error/retry and empty-result states with labelled controls.
 
@@ -50,7 +51,7 @@ npx playwright install chromium
 npm test
 ```
 
-Playwright builds the app and starts its own production server on port 3100; leave that port free. Eight scenarios run on desktop and mobile Chromium, giving 16 test executions.
+Playwright builds the app and starts its own production server on port 3100; leave that port free. Ten scenarios run on desktop and mobile Chromium, giving 20 test executions.
 
 ```sh
 npm run test:report

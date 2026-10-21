@@ -44,7 +44,11 @@ export default function ProductForm({ initialValues, initialImage, fallbackImage
   }
   function blurField(field: keyof ProductFormValues) {
     setTouched((previous) => ({ ...previous, [field]: true }));
-    updateFieldError(field, validateProduct(values)[field]);
+    const message = validateProduct(values)[field];
+    updateFieldError(field, message);
+    if (field === "price" && !message) {
+      setValues({ ...values, price: Number(values.price.trim()).toFixed(2) });
+    }
   }
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -85,7 +89,7 @@ export default function ProductForm({ initialValues, initialImage, fallbackImage
           <div>
             <label htmlFor="price">Price (USD)</label>
             <input id="price" name="price" onBlur={() => blurField("price")} inputMode="decimal" value={values.price} onChange={(e) => changeField("price", e.target.value)} placeholder="0.00" aria-invalid={!!errors.price} aria-describedby={`price-help${errors.price ? " price-error" : ""}`} required />
-            <p id="price-help" className="field-help">USD · More than 0 · Up to 2 decimal places (19.99)</p>
+            <p id="price-help" className="field-help">USD · More than 0 · Two decimal places (19.99)</p>
             <FieldError field="price" errors={errors} />
           </div>
           <div>
