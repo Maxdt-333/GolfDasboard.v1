@@ -2,6 +2,7 @@
 
 // Client boundary: controlled inputs preserve typed values when validation fails.
 import ProductImageUpload from "./ProductImageUpload";
+import { categoryImages } from "@/lib/productImages";
 import { useState, type FormEvent } from "react";
 import { CATEGORIES, STATUSES, type ProductFormValues, type FormErrors, type Category, type ProductStatus } from "@/lib/types";
 import { validateProduct } from "@/lib/validateProduct";
@@ -67,7 +68,7 @@ export default function ProductForm({ initialValues, initialImage, fallbackImage
 
   return (
     <form noValidate onSubmit={handleSubmit} className="form-panel">
-      <ProductImageUpload image={image} fallback={values.category === initialValues.category && fallbackImage ? fallbackImage : values.category ? `/thumbnails/${values.category.toLowerCase()}.svg` : undefined} onChange={setImage} onBusy={setUploading} onErrorChange={setImageError} />
+      <ProductImageUpload image={image} fallback={values.category === initialValues.category && fallbackImage ? fallbackImage : values.category ? categoryImages[values.category] : undefined} onChange={setImage} onBusy={setUploading} onErrorChange={setImageError} />
       <div className="space-y-6">
         <div>
           <label htmlFor="name">Product name</label>

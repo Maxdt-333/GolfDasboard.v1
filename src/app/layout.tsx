@@ -1,5 +1,19 @@
-import Link from "next/link";
 import type { Metadata } from "next";
+import { ViewModeProvider } from "@/components/ViewModeProvider";
+import DashboardShell from "@/components/DashboardShell";
 import "./globals.css";
-export const metadata: Metadata = { title: "Fairway Dashboard", description: "Golf product inventory workspace" };
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) { return <html lang="en"><body><header className="site-header"><Link href="/products" aria-label="Fairway products">FAIRWAY</Link><span>Owner workspace</span></header>{children}</body></html>; }
+
+export const metadata: Metadata = {
+  title: { default: "Fairway Golf · Made for the game", template: "%s | Fairway" },
+  description: "Explore and manage the Fairway golf equipment and apparel collection.",
+};
+
+// The root stays a Server Component; interactive header controls have small client boundaries.
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return <html lang="en"><body><ViewModeProvider>
+    <a href="#main" className="skip-link">Skip to content</a>
+    <DashboardShell>
+      <main id="main" className="page-shell">{children}</main>
+    </DashboardShell>
+  </ViewModeProvider></body></html>;
+}

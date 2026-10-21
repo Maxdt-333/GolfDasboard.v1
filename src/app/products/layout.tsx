@@ -1,6 +1,6 @@
-import ProductNotice from "@/components/ProductNotice";
 import { Suspense } from "react";
 import { ProductsProvider } from "@/components/ProductsProvider";
+import ProductNotice from "@/components/ProductNotice";
 import LoadingState from "@/components/states/LoadingState";
 
 // Server layout persists across product routes; Suspense contains useSearchParams.

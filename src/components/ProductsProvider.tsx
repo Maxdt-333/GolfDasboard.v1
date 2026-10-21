@@ -4,6 +4,7 @@
 import { createContext, useCallback, useContext, useEffect, useReducer, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { fetchProducts } from "@/lib/api";
+import { useViewMode } from "./ViewModeProvider";
 import type { Product } from "@/lib/types";
 
 interface State {
@@ -34,7 +35,7 @@ function reducer(state: State, action: Action): State {
       if (!previous) return state;
       const archived = previous.status !== "Archived" && action.product.status === "Archived";
       const restored = previous.status === "Archived" && action.product.status !== "Archived";
-      const message = archived ? "was archived" : restored ? `was restored as ${action.product.status}` : "was updated";
+      const message = archived ? "was archived and removed from Customer preview" : restored ? `was restored as ${action.product.status}` : "was updated";
       return { ...state, products: state.products.map((p) => p.id === action.product.id ? action.product : p), notice: `“${action.product.name}” ${message}.`, noticeId: state.noticeId + 1 };
     }
     case "DELETE": {
@@ -57,6 +58,7 @@ interface ProductsContextValue extends State {
 const ProductsContext = createContext<ProductsContextValue | null>(null);
 
 export function ProductsProvider({ children }: { children: React.ReactNode }) {
+  const { customer } = useViewMode();
   const [state, dispatch] = useReducer(reducer, { products: [], status: "loading", error: null, notice: "", noticeId: 0, nextId: 1 });
   const [reloadKey, setReloadKey] = useState(0);
   const searchParams = useSearchParams();
@@ -92,9 +94,9 @@ export function ProductsProvider({ children }: { children: React.ReactNode }) {
   return (
     <ProductsContext.Provider value={{
       ...state, retry,
-      addProduct: (product) => { dispatch({ type: "ADD", product }); },
-      updateProduct: (product) => { dispatch({ type: "UPDATE", product }); },
-      deleteProduct: (id) => { dispatch({ type: "DELETE", id }); },
+      addProduct: (product) => { if (!customer) dispatch({ type: "ADD", product }); },
+      updateProduct: (product) => { if (!customer) dispatch({ type: "UPDATE", product }); },
+      deleteProduct: (id) => { if (!customer) dispatch({ type: "DELETE", id }); },
       dismissNotice,
       getProductById: (id) => state.products.find((p) => String(p.id) === id),
     }}>

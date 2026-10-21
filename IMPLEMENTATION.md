@@ -2,35 +2,29 @@
 
 ## Architecture
 
-Next.js App Router serves `/products` and GET `/api/products`; the root route redirects to the catalog. Product contracts define the five categories, three statuses and required inventory fields. A local 18-product JSON fixture keeps the API reproducible without external services or credentials.
+Next.js App Router serves the application routes and a JSON-backed GET API. The root layout remains a Server Component. Small client boundaries handle navigation, preview mode, filters, forms and shared product state.
 
-The API client checks HTTP status, JSON shape, individual records and unique IDs before returning typed products. The route handler includes bounded delay and error simulation for recovery checks. TypeScript aliases resolve `@/` to `src/`, and Turbopack uses the application folder as its root.
+ProductsProvider loads the 18-product fixture through the API client, validates the response shape, aborts stale requests and exposes retryable loading/error states. A reducer owns product mutations and named action notifications. State persists across in-app product navigation and resets on refresh; there is no database or browser storage.
 
-## Catalog state and filtering
+## Filtering and navigation
 
-The persistent products layout wraps a client provider in Suspense. The provider loads and validates product data, aborts stale requests and supports Retry. A reducer owns the shared catalog; ProductList keeps one controlled filters object and derives visible results with useMemo.
+ProductList stores one controlled filter object and derives the displayed products. Search is trimmed and case-insensitive; category and status restrictions compose with ascending/descending price sorts. The default sorts by descending product ID. Category metrics describe the whole selected category, independently of search/status results. URL controls are preserved through category navigation and restored on reload. Clear filters retains the category.
 
-Search is trimmed and case-insensitive. Category and status restrictions compose with price sorting. Default order uses descending product ID. Category metrics are independent of search/status results; a separate live result count announces the displayed inventory. Clear filters resets the controls.
+## Forms and product actions
 
-The table exposes all inventory fields on desktop/tablet, and mobile cards expose the same information. Controls have explicit labels. Loading, failed requests, malformed responses and empty results have useful states. Search/filter interactions do not introduce artificial loading delays.
+Add and edit share a controlled form. Input values stay as strings until validation succeeds, preserving malformed values for correction. Required name/category/status, plain positive USD prices with up to two decimal places, and non-negative safe-integer stock have specific errors. Invalid submission focuses the first error; aria-invalid and aria-describedby associate feedback with the input.
 
-## Details and forms
+Saving updates the shared inventory and opens details. Cancel discards unsaved changes. IDs increase throughout the session. Archive preserves the record, restore returns it to Draft, and deletion requires a native modal confirmation with Cancel initially focused. Cancel/Escape leave the record untouched. Notifications describe the actual action and product, dismiss after eight seconds and pause during hover/focus.
 
-Dynamic detail and edit routes await route params and read the shared provider. Both handle unknown IDs with a recovery link. Add/edit forms use controlled string values so blanks and malformed numbers remain available for correction. Validation runs on submission and blur, then updates as touched fields are corrected. Errors connect through aria-invalid and aria-describedby; failed submission focuses the first invalid field in visual order.
+## Images and preview
 
-Names are trimmed before saving. Category/status values must match the allowed options. Price accepts plain positive USD amounts with at most two decimal places; stock accepts non-negative safe integers. Conversion to numeric values happens only after validation.
+JPG, PNG and WebP uploads up to 5 MB are checked for type, size and successful decoding. Saving is blocked while processing or while an upload error remains unresolved. A request counter ignores stale completions. Saved uploads override the local product photo; replacement/removal can be cancelled without changing the saved image.
 
-Saving dispatches ADD or UPDATE and opens the record details. New IDs increase from the largest fixture ID. The catalog derives updated results and counts from shared state. Cancel returns to the original details or list without mutating data. In-app navigation preserves state; refresh restores the fixture.
+The 18 fixture products have distinct local photos. Product images use contained sizing with padding. The course panel appears only in customer preview and retains a stable crop during scrolling. Preview shows Active products only, hides management controls, guards editing through history and blocks provider mutations. It is a display preference, not authentication.
 
-Create/update notifications come from actual reducer actions rather than URL flags. Each action increments a notice ID to restart the eight-second dismissal timer, including repeated messages. Hover/focus pauses dismissal; manual dismissal is available. Timer cleanup prevents stale callbacks.
+## Dependencies and tradeoffs
 
-## Images and management actions
-
-ProductImageUpload checks MIME type, a 5 MB size limit and successful browser decoding. A request counter ignores stale upload completions. Image data stays in the controlled form until Save, then Product.image takes precedence over category artwork. Save is blocked during processing and unresolved upload errors. Cancel discards unsaved image changes; removal restores fallback artwork.
-
-Archive and restore update status without replacing other fields or photos. Restore returns to Draft. The reducer derives product-specific action messages from actual mutations. A native modal dialog contains focus and makes the background inert; Cancel is initially focused. Cancel/Escape leave data unchanged. Only confirmation dispatches DELETE and replaces the route with the catalog. nextId remains increasing after deletion.
-
-The hidden file input retains one-pixel sizing so global input styling cannot introduce page overflow. The labelled upload button provides its visible interaction target.
+React context and a reducer keep the small catalog shared without a state-management dependency. Tailwind utilities and CSS provide responsive layouts; Lucide supplies consistent UI icons. The mock API keeps setup reproducible without external credentials. Session-only mutations meet the local-demo scope but would need persistent storage and server-side validation for production. Preview would need real authorization for restricted access.
 
 ## AI-use disclosure
 
